@@ -16,9 +16,9 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff0a0e21),
+      backgroundColor: const Color(0xff0a0e21),
       appBar: AppBar(
-        title: Center(child: Text("BMI Calculator")),
+        title: const Center(child: Text("BMI Calculator")),
       ),
       body: Column(children: [
         Expanded(
@@ -48,12 +48,13 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // ignore: prefer_const_constructors
               SizedBox(
                 height: 20,
               ),
               Text(
                 "HEIGHT",
-                style: labelTextStyle,
+                style: LabelTextStyle,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -61,14 +62,12 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
                 children: [
                   Text(
                     "$height",
-                    style: TextStyle(
-                        fontSize: 50,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                    // ignore: prefer_const_constructors
+                    style: ValueTextStyle,
                   ),
                   Text(
                     "cm",
-                    style: labelTextStyle,
+                    style: LabelTextStyle,
                   )
                 ],
               ),
@@ -85,20 +84,106 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
             ],
           )),
         )),
-        Expanded(child: Container(color: Colors.green)),
+        Expanded(
+            child: Row(
+          children: const [
+            Expanded(
+              child: BmiCard(
+                  child: CardColumn(
+                title: "Weight",
+                unit: "Kg",
+                value: "80",
+              )),
+            ),
+            Expanded(
+              child: BmiCard(
+                  child: CardColumn(
+                title: "Age",
+                unit: "",
+                value: "20",
+              )),
+            ),
+          ],
+        )),
         GestureDetector(
           onTap: () => {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              return BmiResultScreen();
+              return const BmiResultScreen();
             })),
           },
           child: Container(
             color: Colors.lightBlue,
             height: 60,
-            child: Center(child: Text("Hitung BMI")),
+            child: const Center(child: Text("Hitung BMI")),
           ),
         )
       ]),
+    );
+  }
+}
+
+class CardColumn extends StatelessWidget {
+  const CardColumn({
+    Key? key,
+    required this.title,
+    required this.unit,
+    required this.value,
+  }) : super(key: key);
+
+  final String title;
+  final String unit;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const SizedBox(
+          height: 20,
+        ),
+        Text(
+          title,
+          style: LabelTextStyle,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              value,
+              style: ValueTextStyle,
+            ),
+            Text(
+              unit,
+              style: LabelTextStyle,
+            )
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(15),
+              // ignore: prefer_const_constructors
+              child: Icon(
+                Icons.add,
+                size: 30,
+                color: Colors.white,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(15),
+              // ignore: prefer_const_constructors
+              child: Icon(
+                Icons.remove,
+                size: 30,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        )
+      ],
     );
   }
 }
@@ -114,7 +199,7 @@ class BmiCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.all(15),
+        margin: const EdgeInsets.all(15),
         decoration: BoxDecoration(
             color: SecondaryColor, borderRadius: BorderRadius.circular(15)),
         child: child);
@@ -145,7 +230,7 @@ class GenderIconText extends StatelessWidget {
         ),
         Text(
           title,
-          style: labelTextStyle,
+          style: LabelTextStyle,
         ),
       ],
     );
