@@ -90,7 +90,7 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
             Expanded(
               child: BmiCard(
                   child: CardColumn(
-                title: "Weight",
+                title: "WEIGHT",
                 unit: "Kg",
                 value: "80",
               )),
@@ -98,7 +98,7 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
             Expanded(
               child: BmiCard(
                   child: CardColumn(
-                title: "Age",
+                title: "AGE",
                 unit: "",
                 value: "20",
               )),
