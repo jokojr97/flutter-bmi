@@ -13,6 +13,8 @@ class BmiDataScreen extends StatefulWidget {
 
 class _BmiDataScreenState extends State<BmiDataScreen> {
   int height = 100;
+  int weight = 80;
+  int age = 25;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +77,7 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
                   value: height.toDouble(),
                   min: 30,
                   max: 200,
-                  thumbColor: Colors.red,
+                  thumbColor: ButtonColor,
                   activeColor: Colors.white,
                   onChanged: (value) {
                     height = value.toInt();
@@ -86,13 +88,13 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
         )),
         Expanded(
             child: Row(
-          children: const [
+          children: [
             Expanded(
               child: BmiCard(
                   child: CardColumn(
                 title: "WEIGHT",
                 unit: "Kg",
-                value: "80",
+                value: weight,
               )),
             ),
             Expanded(
@@ -100,7 +102,7 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
                   child: CardColumn(
                 title: "AGE",
                 unit: "",
-                value: "20",
+                value: age,
               )),
             ),
           ],
@@ -112,9 +114,16 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
             })),
           },
           child: Container(
-            color: Colors.lightBlue,
+            color: ButtonColor,
             height: 60,
-            child: const Center(child: Text("Hitung BMI")),
+            child: const Center(
+                child: Text(
+              "Hitung BMI",
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+            )),
           ),
         )
       ]),
@@ -122,8 +131,8 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
   }
 }
 
-class CardColumn extends StatelessWidget {
-  const CardColumn({
+class CardColumn extends StatefulWidget {
+  CardColumn({
     Key? key,
     required this.title,
     required this.unit,
@@ -132,18 +141,23 @@ class CardColumn extends StatelessWidget {
 
   final String title;
   final String unit;
-  final String value;
+  late int value;
 
+  @override
+  State<CardColumn> createState() => _CardColumnState();
+}
+
+class _CardColumnState extends State<CardColumn> {
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const SizedBox(
-          height: 20,
+          height: 10,
         ),
         Text(
-          title,
+          widget.title,
           style: LabelTextStyle,
         ),
         Row(
@@ -151,34 +165,54 @@ class CardColumn extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
-              value,
+              "${widget.value}",
               style: ValueTextStyle,
             ),
             Text(
-              unit,
+              widget.unit,
               style: LabelTextStyle,
             )
           ],
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.all(15),
-              // ignore: prefer_const_constructors
-              child: Icon(
-                Icons.add,
-                size: 30,
-                color: Colors.white,
+              margin: EdgeInsets.only(right: 10, left: 10, top: 20),
+              child: RawMaterialButton(
+                onPressed: () {
+                  widget.value++;
+                  setState(() {});
+                },
+                elevation: 0,
+                // ignore: prefer_const_constructors
+                child: Icon(
+                  Icons.add,
+                  size: 20,
+                  color: Colors.white,
+                ),
+                shape: CircleBorder(),
+                fillColor: Color(0xff212714),
+                constraints: BoxConstraints.tightFor(width: 56, height: 56),
               ),
             ),
             Container(
-              padding: const EdgeInsets.all(15),
-              // ignore: prefer_const_constructors
-              child: Icon(
-                Icons.remove,
-                size: 30,
-                color: Colors.white,
+              margin: EdgeInsets.only(right: 10, left: 20, top: 20),
+              child: RawMaterialButton(
+                onPressed: () {
+                  widget.value--;
+                  setState(() {});
+                },
+                elevation: 0,
+                // padding: const EdgeInsets.all(15),
+                child: Icon(
+                  Icons.remove,
+                  size: 20,
+                  color: Colors.white,
+                ),
+                shape: CircleBorder(),
+                fillColor: Color(0xff212714),
+                constraints: BoxConstraints.tightFor(width: 56, height: 56),
               ),
             ),
           ],
