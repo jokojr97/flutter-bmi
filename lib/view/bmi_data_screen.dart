@@ -12,9 +12,18 @@ class BmiDataScreen extends StatefulWidget {
 }
 
 class _BmiDataScreenState extends State<BmiDataScreen> {
-  int height = 100;
-  int weight = 80;
+  int height = 150;
+  int weight = 60;
   int age = 25;
+
+  double calculateBMI() {
+    double hasilBmi;
+    double heightInMeter;
+    heightInMeter = height / 100;
+    hasilBmi = weight / (heightInMeter * heightInMeter);
+    return hasilBmi;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,10 +117,13 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
           ],
         )),
         GestureDetector(
-          onTap: () => {
+          onTap: () {
+            // print(calculateBMI());
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              return const BmiResultScreen();
-            })),
+              return BmiResultScreen(
+                bmiResult: calculateBMI(),
+              );
+            }));
           },
           child: Container(
             color: ButtonColor,
@@ -174,48 +186,54 @@ class _CardColumnState extends State<CardColumn> {
             )
           ],
         ),
-        Row(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              margin: EdgeInsets.only(right: 10, left: 10, top: 20),
-              child: RawMaterialButton(
-                onPressed: () {
-                  widget.value++;
-                  setState(() {});
-                },
-                elevation: 0,
-                // ignore: prefer_const_constructors
-                child: Icon(
-                  Icons.add,
-                  size: 20,
-                  color: Colors.white,
+        Center(
+          child: Row(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.only(top: 10),
+                  child: RawMaterialButton(
+                    onPressed: () {
+                      widget.value++;
+                      setState(() {});
+                    },
+                    elevation: 0,
+                    // ignore: prefer_const_constructors
+                    child: Icon(
+                      Icons.add,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                    shape: CircleBorder(),
+                    fillColor: Color(0xff212714),
+                    constraints: BoxConstraints.tightFor(width: 56, height: 56),
+                  ),
                 ),
-                shape: CircleBorder(),
-                fillColor: Color(0xff212714),
-                constraints: BoxConstraints.tightFor(width: 56, height: 56),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(right: 10, left: 20, top: 20),
-              child: RawMaterialButton(
-                onPressed: () {
-                  widget.value--;
-                  setState(() {});
-                },
-                elevation: 0,
-                // padding: const EdgeInsets.all(15),
-                child: Icon(
-                  Icons.remove,
-                  size: 20,
-                  color: Colors.white,
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.only(top: 10),
+                  child: RawMaterialButton(
+                    onPressed: () {
+                      widget.value--;
+                      setState(() {});
+                    },
+                    elevation: 0,
+                    // ignore: prefer_const_constructors
+                    child: Icon(
+                      Icons.remove,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                    shape: CircleBorder(),
+                    fillColor: Color(0xff212714),
+                    constraints: BoxConstraints.tightFor(width: 56, height: 56),
+                  ),
                 ),
-                shape: CircleBorder(),
-                fillColor: Color(0xff212714),
-                constraints: BoxConstraints.tightFor(width: 56, height: 56),
               ),
-            ),
-          ],
+            ],
+          ),
         )
       ],
     );
