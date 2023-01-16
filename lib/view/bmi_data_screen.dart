@@ -1,6 +1,7 @@
 // import 'package:flutter/src/widgets/container.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 import 'package:bmi/constant/constant.dart';
+import 'package:bmi/helper/bmi_calculator.dart';
 import 'package:bmi/view/bmi_result_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -17,13 +18,13 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
   int age = 25;
   String? gender;
 
-  double calculateBMI() {
-    double hasilBmi;
-    double heightInMeter;
-    heightInMeter = height / 100;
-    hasilBmi = weight / (heightInMeter * heightInMeter);
-    return hasilBmi;
-  }
+  // double calculateBMI() {
+  //   double hasilBmi;
+  //   double heightInMeter;
+  //   heightInMeter = height / 100;
+  //   hasilBmi = weight / (heightInMeter * heightInMeter);
+  //   return hasilBmi;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -132,9 +133,12 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
         GestureDetector(
           onTap: () {
             // print(calculateBMI());
+            final bmiCalculator = BmiCalculator(height: height, weight: weight);
+            bmiCalculator.calculateBmi();
+
             Navigator.of(context).push(MaterialPageRoute(builder: (context) {
               return BmiResultScreen(
-                bmiResult: calculateBMI(),
+                bmiResult: bmiCalculator.bmi!,
               );
             }));
           },

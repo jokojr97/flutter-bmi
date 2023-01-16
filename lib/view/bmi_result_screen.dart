@@ -1,66 +1,73 @@
 // import 'package:flutter/src/widgets/container.dart';
 // import 'package:flutter/src/widgets/framework.dart';
+import 'package:bmi/helper/bmi_calculator.dart';
 import 'package:bmi/view/bmi_data_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:bmi/constant/constant.dart';
 
 class BmiResultScreen extends StatelessWidget {
-  const BmiResultScreen({super.key, required this.bmiResult});
+  const BmiResultScreen({
+    super.key,
+    required this.bmiResult,
+    // this.bmiCalculator
+  });
   final double bmiResult;
+  // final BmiCalculator? bmiCalculator;
 
-  String determinanceCategory(double bmi) {
-    String category = "";
-    if (bmi < 16.0) {
-      category = underWeightSevere;
-    } else if (bmi >= 16.0 && bmi <= 17) {
-      category = underWeightModerate;
-    } else if (bmi >= 17.0 && bmi <= 18.5) {
-      category = underWeightMild;
-    } else if (bmi >= 18.5 && bmi <= 25) {
-      category = normal;
-    } else if (bmi >= 25 && bmi <= 30) {
-      category = overWeight;
-    } else if (bmi >= 30 && bmi <= 35) {
-      category = obeseI;
-    } else if (bmi >= 35.0 && bmi <= 40) {
-      category = obeseII;
-    } else if (bmi > 40.0) {
-      category = obeseIII;
-    }
+  // String determinanceCategory(double bmi) {
+  //   String category = "";
+  //   if (bmi < 16.0) {
+  //     category = underWeightSevere;
+  //   } else if (bmi >= 16.0 && bmi <= 17) {
+  //     category = underWeightModerate;
+  //   } else if (bmi >= 17.0 && bmi <= 18.5) {
+  //     category = underWeightMild;
+  //   } else if (bmi >= 18.5 && bmi <= 25) {
+  //     category = normal;
+  //   } else if (bmi >= 25 && bmi <= 30) {
+  //     category = overWeight;
+  //   } else if (bmi >= 30 && bmi <= 35) {
+  //     category = obeseI;
+  //   } else if (bmi >= 35.0 && bmi <= 40) {
+  //     category = obeseII;
+  //   } else if (bmi > 40.0) {
+  //     category = obeseIII;
+  //   }
 
-    return category;
-  }
+  //   return category;
+  // }
 
-  getRiskDescription(String categoryName) {
-    String desc = "";
-    switch (categoryName) {
-      case underWeightSevere:
-      case underWeightModerate:
-      case underWeightMild:
-        desc = "Possible Nutritional deficiency and osteoporosis";
-        break;
-      case normal:
-        desc = "Low Risk (Health Range)";
-        break;
-      case overWeight:
-        desc =
-            "Moderate Risk of developing hearth desease, high blood preasure, stroke, diabetes, mellitus";
-        break;
-      case obeseI:
-      case obeseII:
-      case obeseIII:
-        desc =
-            "High Risk of developing hearth desease, high blood preasure, stroke, diabetes, mellitus, metabolic syndrome";
-        break;
-      default:
-    }
-    return desc;
-  }
+  // getRiskDescription(String categoryName) {
+  //   String desc = "";
+  //   switch (categoryName) {
+  //     case underWeightSevere:
+  //     case underWeightModerate:
+  //     case underWeightMild:
+  //       desc = "Possible Nutritional deficiency and osteoporosis";
+  //       break;
+  //     case normal:
+  //       desc = "Low Risk (Health Range)";
+  //       break;
+  //     case overWeight:
+  //       desc =
+  //           "Moderate Risk of developing hearth desease, high blood preasure, stroke, diabetes, mellitus";
+  //       break;
+  //     case obeseI:
+  //     case obeseII:
+  //     case obeseIII:
+  //       desc =
+  //           "High Risk of developing hearth desease, high blood preasure, stroke, diabetes, mellitus, metabolic syndrome";
+  //       break;
+  //     default:
+  //   }
+  //   return desc;
+  // }
 
   @override
   Widget build(BuildContext context) {
-    final categoryName = determinanceCategory(bmiResult);
-    final riskName = getRiskDescription(categoryName);
+    final BmiCalculator bmiCalculator = BmiCalculator.fromBmiValue(bmiResult);
+    bmiCalculator.determinanceCategory();
+    bmiCalculator.getRiskDescription();
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -92,7 +99,9 @@ class BmiResultScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        categoryName,
+                        bmiCalculator.bmiCategory!,
+                        // atau menggunakan bmiCalculator.bmiCategory ??,
+
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           color: Colors.white,
@@ -101,7 +110,7 @@ class BmiResultScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        bmiResult.toStringAsFixed(1),
+                        bmiCalculator.bmi!.toStringAsFixed(1),
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 100,
@@ -110,7 +119,7 @@ class BmiResultScreen extends StatelessWidget {
                       ),
                       Center(
                         child: Text(
-                          "$riskName",
+                          bmiCalculator.bmiDesc!,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color: Colors.white,
