@@ -15,6 +15,7 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
   int height = 150;
   int weight = 60;
   int age = 25;
+  String? gender;
 
   double calculateBMI() {
     double hasilBmi;
@@ -34,67 +35,79 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
       body: Column(children: [
         Expanded(
             child: Row(
-          children: const [
+          children: [
             Expanded(
-                child: BmiCard(
-              child: GenderIconText(
-                title: "Male",
-                icon: Icons.male,
-                color: Colors.blue,
+                child: GestureDetector(
+              onTap: () {
+                gender = "male";
+                setState(() {});
+              },
+              child: BmiCard(
+                borderColor: (gender == "male") ? Colors.white : primaryColor,
+                child: const GenderIconText(
+                  title: "Male",
+                  icon: Icons.male,
+                  color: Colors.blue,
+                ),
               ),
             )),
             Expanded(
-                child: BmiCard(
-              child: GenderIconText(
-                title: "Female",
-                icon: Icons.female,
-                color: Colors.pink,
+                child: GestureDetector(
+              onTap: () {
+                gender = "female";
+                setState(() {});
+              },
+              child: BmiCard(
+                borderColor: (gender == "female") ? Colors.white : primaryColor,
+                child: const GenderIconText(
+                  title: "Female",
+                  icon: Icons.female,
+                  color: Colors.pink,
+                ),
               ),
             ))
           ],
         )),
         Expanded(
-            child: Container(
-          child: BmiCard(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // ignore: prefer_const_constructors
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                "HEIGHT",
-                style: LabelTextStyle,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    "$height",
-                    // ignore: prefer_const_constructors
-                    style: ValueTextStyle,
-                  ),
-                  Text(
-                    "cm",
-                    style: LabelTextStyle,
-                  )
-                ],
-              ),
-              Slider(
-                  value: height.toDouble(),
-                  min: 30,
-                  max: 200,
-                  thumbColor: ButtonColor,
-                  activeColor: Colors.white,
-                  onChanged: (value) {
-                    height = value.toInt();
-                    setState(() {});
-                  })
-            ],
-          )),
-        )),
+            child: BmiCard(
+                child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // ignore: prefer_const_constructors
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              "HEIGHT",
+              style: labelTextStyle,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  "$height",
+                  // ignore: prefer_const_constructors
+                  style: valueTextStyle,
+                ),
+                Text(
+                  "cm",
+                  style: labelTextStyle,
+                )
+              ],
+            ),
+            Slider(
+                value: height.toDouble(),
+                min: 30,
+                max: 200,
+                thumbColor: buttonColor,
+                activeColor: Colors.white,
+                onChanged: (value) {
+                  height = value.toInt();
+                  setState(() {});
+                })
+          ],
+        ))),
         Expanded(
             child: Row(
           children: [
@@ -126,11 +139,11 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
             }));
           },
           child: Container(
-            color: ButtonColor,
+            color: buttonColor,
             height: 60,
             child: const Center(
                 child: Text(
-              "Hitung BMI",
+              "Calculate BMI",
               style: TextStyle(
                   fontSize: 20,
                   color: Colors.white,
@@ -143,6 +156,7 @@ class _BmiDataScreenState extends State<BmiDataScreen> {
   }
 }
 
+// ignore: must_be_immutable
 class CardColumn extends StatefulWidget {
   CardColumn({
     Key? key,
@@ -170,7 +184,7 @@ class _CardColumnState extends State<CardColumn> {
         ),
         Text(
           widget.title,
-          style: LabelTextStyle,
+          style: labelTextStyle,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -178,11 +192,11 @@ class _CardColumnState extends State<CardColumn> {
           children: [
             Text(
               "${widget.value}",
-              style: ValueTextStyle,
+              style: valueTextStyle,
             ),
             Text(
               widget.unit,
-              style: LabelTextStyle,
+              style: labelTextStyle,
             )
           ],
         ),
@@ -192,7 +206,7 @@ class _CardColumnState extends State<CardColumn> {
             children: [
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(top: 10),
+                  margin: const EdgeInsets.only(top: 10),
                   child: RawMaterialButton(
                     onPressed: () {
                       widget.value++;
@@ -200,20 +214,21 @@ class _CardColumnState extends State<CardColumn> {
                     },
                     elevation: 0,
                     // ignore: prefer_const_constructors
-                    child: Icon(
+                    shape: CircleBorder(),
+                    fillColor: const Color(0xff212714),
+                    constraints:
+                        const BoxConstraints.tightFor(width: 56, height: 56),
+                    child: const Icon(
                       Icons.add,
                       size: 20,
                       color: Colors.white,
                     ),
-                    shape: CircleBorder(),
-                    fillColor: Color(0xff212714),
-                    constraints: BoxConstraints.tightFor(width: 56, height: 56),
                   ),
                 ),
               ),
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(top: 10),
+                  margin: const EdgeInsets.only(top: 10),
                   child: RawMaterialButton(
                     onPressed: () {
                       widget.value--;
@@ -221,14 +236,15 @@ class _CardColumnState extends State<CardColumn> {
                     },
                     elevation: 0,
                     // ignore: prefer_const_constructors
-                    child: Icon(
+                    shape: CircleBorder(),
+                    fillColor: const Color(0xff212714),
+                    constraints:
+                        const BoxConstraints.tightFor(width: 56, height: 56),
+                    child: const Icon(
                       Icons.remove,
                       size: 20,
                       color: Colors.white,
                     ),
-                    shape: CircleBorder(),
-                    fillColor: Color(0xff212714),
-                    constraints: BoxConstraints.tightFor(width: 56, height: 56),
                   ),
                 ),
               ),
@@ -244,16 +260,20 @@ class BmiCard extends StatelessWidget {
   const BmiCard({
     Key? key,
     this.child,
+    this.borderColor = primaryColor,
   }) : super(key: key);
 
   final Widget? child;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
         margin: const EdgeInsets.all(15),
         decoration: BoxDecoration(
-            color: SecondaryColor, borderRadius: BorderRadius.circular(15)),
+            border: Border.all(color: borderColor!),
+            color: secondaryColor,
+            borderRadius: BorderRadius.circular(15)),
         child: child);
   }
 }
@@ -282,7 +302,7 @@ class GenderIconText extends StatelessWidget {
         ),
         Text(
           title,
-          style: LabelTextStyle,
+          style: labelTextStyle,
         ),
       ],
     );

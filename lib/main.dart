@@ -15,13 +15,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         // title: 'Flutter Demo',
         theme: ThemeData(
-          primaryColor: PrimaryColor,
-          scaffoldBackgroundColor: PrimaryColor,
-          appBarTheme: AppBarTheme(
-            backgroundColor: PrimaryColor,
+          primaryColor: primaryColor,
+          scaffoldBackgroundColor: primaryColor,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: primaryColor,
           ),
           primarySwatch: Colors.blue,
         ),
-        home: BmiDataScreen());
+        home: const BmiDataScreen());
   }
 }

@@ -1,7 +1,6 @@
 // import 'package:flutter/src/widgets/container.dart';
 // import 'package:flutter/src/widgets/framework.dart';
 import 'package:bmi/view/bmi_data_screen.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:bmi/constant/constant.dart';
 
@@ -22,11 +21,11 @@ class BmiResultScreen extends StatelessWidget {
     } else if (bmi >= 25 && bmi <= 30) {
       category = overWeight;
     } else if (bmi >= 30 && bmi <= 35) {
-      category = ObeseI;
+      category = obeseI;
     } else if (bmi >= 35.0 && bmi <= 40) {
-      category = ObeseII;
+      category = obeseII;
     } else if (bmi > 40.0) {
-      category = ObeseIII;
+      category = obeseIII;
     }
 
     return category;
@@ -36,11 +35,7 @@ class BmiResultScreen extends StatelessWidget {
     String desc = "";
     switch (categoryName) {
       case underWeightSevere:
-        desc = "Possible Nutritional deficiency and osteoporosis";
-        break;
       case underWeightModerate:
-        desc = "Possible Nutritional deficiency and osteoporosis";
-        break;
       case underWeightMild:
         desc = "Possible Nutritional deficiency and osteoporosis";
         break;
@@ -51,15 +46,9 @@ class BmiResultScreen extends StatelessWidget {
         desc =
             "Moderate Risk of developing hearth desease, high blood preasure, stroke, diabetes, mellitus";
         break;
-      case ObeseI:
-        desc =
-            "High Risk of developing hearth desease, high blood preasure, stroke, diabetes, mellitus, metabolic syndrome";
-        break;
-      case ObeseII:
-        desc =
-            "High Risk of developing hearth desease, high blood preasure, stroke, diabetes, mellitus, metabolic syndrome";
-        break;
-      case ObeseIII:
+      case obeseI:
+      case obeseII:
+      case obeseIII:
         desc =
             "High Risk of developing hearth desease, high blood preasure, stroke, diabetes, mellitus, metabolic syndrome";
         break;
@@ -74,7 +63,7 @@ class BmiResultScreen extends StatelessWidget {
     final riskName = getRiskDescription(categoryName);
     return Scaffold(
       appBar: AppBar(
-        title: Center(
+        title: const Center(
           child: Text(
             "Result BMI",
             style: TextStyle(fontSize: 20),
@@ -82,17 +71,14 @@ class BmiResultScreen extends StatelessWidget {
         ),
       ),
       body: Column(children: [
-        Expanded(
+        const Expanded(
           // color: Colors.lightBlue,
-          child: Container(
-            // margin: EdgeInsets.only(top: 10, bottom: 15),
-            child: const Text(
-              "Your Result: ",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-              ),
+          child: Text(
+            "Your Result: ",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
@@ -106,17 +92,17 @@ class BmiResultScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        "$categoryName",
+                        categoryName,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        "${bmiResult.toStringAsFixed(1)}",
-                        style: TextStyle(
+                        bmiResult.toStringAsFixed(1),
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 100,
                           fontWeight: FontWeight.bold,
@@ -126,7 +112,7 @@ class BmiResultScreen extends StatelessWidget {
                         child: Text(
                           "$riskName",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 20,
                           ),
@@ -138,11 +124,11 @@ class BmiResultScreen extends StatelessWidget {
         GestureDetector(
           onTap: () => {Navigator.pop(context)},
           child: Container(
-            color: ButtonColor,
+            color: buttonColor,
             height: 60,
             child: const Center(
                 child: Text(
-              "Hitung Ulang BMI",
+              "Re Calculate BMI",
               style: TextStyle(
                   fontSize: 20,
                   color: Colors.white,
